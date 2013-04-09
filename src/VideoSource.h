@@ -62,6 +62,8 @@ public:
 
 	bool			doRGB;
 	bool			doDraw;
+    bool            doMirror;
+    bool            dynamicHue;
 	
 	msa::fluid::Solver  *	fluidSolver;
 	

@@ -52,8 +52,9 @@ void videoSource::setupVideo(int NX, int NY, msa::fluid::Solver  * fluidSolver0)
 	prevPixelChange = new int[numPixels];
 //	videoColorMult = 0.1;
 //    hue = 0;
-	velocityMult = 0.0001;
-	videoAlpha = 0;
+//	velocityMult = 0.0001;
+	videoAlpha = 127;
+    doMirror = false;
 	
 	
 	
@@ -86,6 +87,10 @@ void videoSource::update(){
 	vidGrabber.update();
 	if (vidGrabber.isFrameNew()){
 		videoCaptured++;
+        if(dynamicHue){
+            hue+=0.01;
+            if (hue>1) hue=0;
+        }
 		
 		unsigned char * pixels = vidGrabber.getPixels();
 		int iy=0;
@@ -100,24 +105,32 @@ void videoSource::update(){
 			}
 			iy++;
 		}
-//flip video horizontally		
-		for (int iy=0; iy<fluidHeight; iy++){
-			int idxin=3*iy*fluidWidth;
-			int idxmirror = 3*(iy+1)*fluidWidth -3;
-			for (int ix=0; ix<fluidWidth; ix++){
-				for(int icolor=0; icolor<3; icolor++)
-					videoMirrored[idxmirror+icolor]=pixels[idxin+icolor];
-				idxin+=3; idxmirror-=3;
-			}
-		}
+//flip video horizontally
+        for (int iy=0; iy<fluidHeight; iy++){
+            int idxin=3*iy*fluidWidth;
+            int idxmirror = 3*(iy+1)*fluidWidth -3;
+            for (int ix=0; ix<fluidWidth; ix++){
+                for(int icolor=0; icolor<3; icolor++)
+                    videoMirrored[idxmirror+icolor]=pixels[idxin+icolor];
+                idxin+=3; idxmirror-=3;
+            }
+        }
 //get video change
 		float totalChange=0;
-		for (int i = 0; i < numPixels*3; i++){
-			differenceFrame[i]=abs(videoMirrored[i]-previousFrame[i]);
-			totalChange+=differenceFrame[i];
-			previousFrame[i]=videoMirrored[i];
+
+        if(doMirror) {
+            for (int i = 0; i < numPixels*3; i++){
+                differenceFrame[i]=abs(videoMirrored[i]-previousFrame[i]);
+                totalChange+=differenceFrame[i];
+                previousFrame[i]=videoMirrored[i];
+            }
+        }else{
+            for (int i = 0; i < numPixels*3; i++){
+                differenceFrame[i]=abs(pixels[i]-previousFrame[i]);
+                totalChange+=differenceFrame[i];
+                previousFrame[i]=pixels[i];
+            }
 		}
-		
 		for (int i=0; i<numPixels; i++){
 				pixelChange[i] = 0;
 				for(int icolor=0; icolor<3; icolor++)
@@ -143,10 +156,11 @@ void videoSource::draw(){
 	}
 	ofEnableAlphaBlending();
 	ofSetColor(255, 255, 255, int(videoAlpha));
-//	videoTexture.loadData(videoMirrored, fluidWidth, fluidHeight, GL_RGB);
-	videoTexture.loadData(differenceFrame, fluidWidth, fluidHeight, GL_RGB);
+	videoTexture.loadData(videoMirrored, fluidWidth, fluidHeight, GL_RGB);
+//	videoTexture.loadData(differenceFrame, fluidWidth, fluidHeight, GL_RGB);
 	//videoTexture.draw(200,200, fluidWidth, fluidHeight);
-	videoTexture.draw(0,0, ofGetWidth(), ofGetHeight());
+//	videoTexture.draw(0,0, ofGetWidth(), ofGetHeight());
+	videoTexture.draw(0,0, camWidth, camHeight);
 }
 
 void videoSource::videoToColor(){

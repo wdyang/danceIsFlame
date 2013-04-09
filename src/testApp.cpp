@@ -35,8 +35,8 @@ void testApp::setup() {
 	gui.addButton("resizeFluid", resizeFluid);
     gui.addSlider("colorMult", colorMult, 0, 100);
     gui.addSlider("velocityMult", velocityMult, 0, 100);
-	gui.addSlider("fs.viscocity", fluidSolver.viscocity, 0.0, 0.01);
-	gui.addSlider("fs.colorDiffusion", fluidSolver.colorDiffusion, 0.0, 0.0003); 
+	gui.addSlider("fs.viscocity", fluidSolver.viscocity, 0.0, 0.001);
+	gui.addSlider("fs.colorDiffusion", fluidSolver.colorDiffusion, 0.0, 0.00005);
 	gui.addSlider("fs.fadeSpeed", fluidSolver.fadeSpeed, 0.0, 0.1); 
 	gui.addSlider("fs.solverIterations", fluidSolver.solverIterations, 1, 50); 
 	gui.addSlider("fs.deltaT", fluidSolver.deltaT, 0.1, 5);
@@ -47,8 +47,12 @@ void testApp::setup() {
 	gui.addToggle("drawParticles", drawParticles); 
 	gui.addToggle("fs.wrapX", fluidSolver.wrap_x);
 	gui.addToggle("fs.wrapY", fluidSolver.wrap_y);
-    gui.addSlider("video.videoColorMult", myVideo->videoColorMult,0, 0.5);
+    gui.addSlider("video.videoColorMult", myVideo->videoColorMult,0, 1);
+    gui.addSlider("video.velocityMult", myVideo->velocityMult,0, 0.002);
+	gui.addToggle("doMirror", myVideo->doMirror);
+	gui.addToggle("dynamicHue", myVideo->dynamicHue);
     gui.addSlider("video.hue", myVideo->hue, 0, 1);
+    gui.addSlider("video.alpha", myVideo->videoAlpha, 0, 255);
 	gui.currentPage().setXMLName("ofxMSAFluidSettings.xml");
     gui.loadFromXML();
 	gui.setDefaultKeys(true);
@@ -123,7 +127,7 @@ void testApp::update(){
             vx = ofRandom(-tuioStationaryForce, tuioStationaryForce);
             vy = ofRandom(-tuioStationaryForce, tuioStationaryForce);
         }
-        addToFluid(tcur->getX(), tcur->getY(), vx, vy);
+        addToFluid(ofVec2f(tcur->getX(), tcur->getY()), ofVec2f(vx, vy), true, true);
     }
 #endif
 	
@@ -137,7 +141,7 @@ void testApp::draw(){
 		fluidDrawer.draw(0, 0, ofGetWidth(), ofGetHeight());
 	} else {
 //		if(ofGetFrameNum()%5==0)
-            fadeToColor(0, 0, 0, 0.01);
+            fadeToColor(0, 0, 0, 0.1);
 	}
 	if(drawParticles)
 		particleSystem.updateAndDraw(fluidSolver, ofGetWindowSize(), drawFluid);
