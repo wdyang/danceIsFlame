@@ -9,7 +9,7 @@
     </Button_resizeFluid>
     <SliderFloat_colorMult>
         <name>colorMult</name>
-        <value>26.000000000</value>
+        <value>35.000000000</value>
     </SliderFloat_colorMult>
     <SliderFloat_velocityMult>
         <name>velocityMult</name>
@@ -17,15 +17,15 @@
     </SliderFloat_velocityMult>
     <SliderFloat_fs.viscocity>
         <name>fs.viscocity</name>
-        <value>0.000250000</value>
+        <value>0.000195000</value>
     </SliderFloat_fs.viscocity>
     <SliderFloat_fs.colorDiffusion>
         <name>fs.colorDiffusion</name>
-        <value>0.000029750</value>
+        <value>0.000043750</value>
     </SliderFloat_fs.colorDiffusion>
     <SliderFloat_fs.fadeSpeed>
         <name>fs.fadeSpeed</name>
-        <value>0.041000001</value>
+        <value>0.018500000</value>
     </SliderFloat_fs.fadeSpeed>
     <SliderInt_fs.solverIterations>
         <name>fs.solverIterations</name>
@@ -37,7 +37,7 @@
     </SliderFloat_fs.deltaT>
     <ComboBox_fd.drawMode>
         <name>fd.drawMode</name>
-        <value>0</value>
+        <value>3</value>
     </ComboBox_fd.drawMode>
     <Toggle_fs.doRGB>
         <name>fs.doRGB</name>
@@ -61,7 +61,7 @@
     </Toggle_fs.wrapX>
     <Toggle_fs.wrapY>
         <name>fs.wrapY</name>
-        <value>1</value>
+        <value>0</value>
     </Toggle_fs.wrapY>
     <SliderFloat_video.videoColorMult>
         <name>video.videoColorMult</name>
@@ -69,7 +69,7 @@
     </SliderFloat_video.videoColorMult>
     <SliderFloat_video.velocityMult>
         <name>video.velocityMult</name>
-        <value>0.001050000</value>
+        <value>0.000580000</value>
     </SliderFloat_video.velocityMult>
     <Toggle_doMirror>
         <name>doMirror</name>

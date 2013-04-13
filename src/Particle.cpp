@@ -81,7 +81,8 @@ void Particle::updateVertexArrays( bool drawingFluid, const ofVec2f &invWindowSi
 		float vxNorm = vel.x * invWindowSize.x;
 		float vyNorm = vel.y * invWindowSize.y;
 		float v2 = vxNorm * vxNorm + vyNorm * vyNorm;
-#define VMAX 0.013f
+//#define VMAX 0.013f
+#define VMAX 0.01f     //reduce this number to get more red
 		if(v2>VMAX*VMAX) v2 = VMAX*VMAX;
 		float satInc = mass > 0.5 ? mass * mass * mass : 0;
 		satInc *= satInc * satInc * satInc;

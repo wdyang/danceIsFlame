@@ -1,11 +1,22 @@
 #pragma once
 
+#include <vector>
+#include <string>
+#include <sstream>
+
 #include "MSAFluid.h"
+
 //#include "MSATimer.h"
 #include "ParticleSystem.h"
 
 #include "ofMain.h"
 #include "VideoSource.h"
+
+#include "ofxOsc.h"
+#define HOST "localhost"
+#define PORT 12345
+#define PORT_TO_GUI 12346
+#define NUM_MSG_STRINGS 20
 
 // comment this line out if you don't wanna use TUIO
 // you will need ofxTUIO & ofxOsc
@@ -79,7 +90,20 @@ public:
 #ifdef USE_TUIO
 	ofxTuioClient tuioClient;
 #endif	
+    
+    bool DrawOSCMessage;
+    ofxOscReceiver receiver;
+    ofxOscSender sender;
+    int current_msg_string;
+    string msg_strings[NUM_MSG_STRINGS];
+    float timers[NUM_MSG_STRINGS];
 	
+    void split(vector<string> &tokens, const string &text, char sep);
+    void sendSetting();
+    void parseOSCMessage();
+    void sendStringToGUI(const string &address, const string &msg);
+    void sendFloatToGUI(const string &address, float msg);
+    void sendIntToGUI(const string &address, int msg);
 };
 
 

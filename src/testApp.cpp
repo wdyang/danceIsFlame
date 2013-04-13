@@ -69,6 +69,12 @@ void testApp::setup() {
 	
 	ofEnableAlphaBlending();
 	ofSetBackgroundAuto(false);
+    
+//setup OSC receiver and sender
+    receiver.setup(PORT);
+    current_msg_string = 0;
+    DrawOSCMessage = true;
+    sender.setup(HOST, PORT_TO_GUI);
 }
 
 
@@ -119,20 +125,122 @@ void testApp::update(){
 	
 	// do finger stuff
 	list<ofxTuioCursor*>cursorList = tuioClient.getTuioCursors();
+    float MaxSpeed = 0.001;
 	for(list<ofxTuioCursor*>::iterator it=cursorList.begin(); it != cursorList.end(); it++) {
 		ofxTuioCursor *tcur = (*it);
         float vx = tcur->getXSpeed() * tuioCursorSpeedMult;
         float vy = tcur->getYSpeed() * tuioCursorSpeedMult;
+        
         if(vx == 0 && vy == 0) {
             vx = ofRandom(-tuioStationaryForce, tuioStationaryForce);
+            vx = vx > MaxSpeed ? MaxSpeed : vx;
             vy = ofRandom(-tuioStationaryForce, tuioStationaryForce);
+            vy = vy > MaxSpeed ? MaxSpeed : vy;
         }
         addToFluid(ofVec2f(tcur->getX(), tcur->getY()), ofVec2f(vx, vy), true, true);
     }
 #endif
 	
 	fluidSolver.update();
+    
+//    osc msg queue update:
+    for(int i=0; i<NUM_MSG_STRINGS; i++){
+        if(timers[i]<ofGetElapsedTimef()){
+            msg_strings[i]="";
+        }
+    }
+    
+    while(receiver.hasWaitingMessages()){
+        parseOSCMessage();
+    }
+    
 }
+void testApp::sendSetting(){
+
+    sendStringToGUI("/danceIsFireSetting/status", "Connected");
+    
+    sendIntToGUI("/danceIsFireSetting/drawFluid", (int)drawFluid);
+}
+
+void testApp::sendStringToGUI(const string &address, const string &msg){
+    ofxOscMessage m;
+    m.setAddress(address);
+    m.addStringArg(msg);
+    sender.sendMessage(m);
+}
+
+void testApp::sendFloatToGUI(const string &address, float msg){
+    ofxOscMessage m;
+    m.setAddress(address);
+    m.addFloatArg(msg);
+    sender.sendMessage(m);
+}
+
+void testApp::sendIntToGUI(const string &address, int msg){
+    ofxOscMessage m;
+    m.setAddress(address);
+    m.addIntArg(msg);
+    sender.sendMessage(m);
+}
+
+
+
+void testApp::parseOSCMessage(){
+    ofxOscMessage m;
+    receiver.getNextMessage(&m);
+    
+    string msg_string="";
+    string raw_address;
+    raw_address = m.getAddress();
+    
+    string buf;
+    vector<string> address;
+    split(address, raw_address, '/');
+    if(address[1]=="danceIsFire"){
+        for(int i=1; i<address.size(); i++){
+            msg_string+=address[i]+":";
+        }
+        
+        msg_string += "  ";
+        for (int i=0; i<m.getNumArgs(); i++){
+            msg_string += m.getArgTypeName(i);
+            msg_string +=": ";
+            if(m.getArgType(i) == OFXOSC_TYPE_INT32){
+                msg_string += ofToString(m.getArgAsInt32(i));
+            }else if(m.getArgType(i)==OFXOSC_TYPE_FLOAT){
+                msg_string += ofToString(m.getArgAsFloat(i));
+            }else if(m.getArgType(i)==OFXOSC_TYPE_STRING){
+                msg_string += ofToString(m.getArgAsString(i));
+            }else{
+                msg_string += "unknown";
+            }
+        }
+        //add the the display list
+        msg_strings[current_msg_string]=msg_string;
+        timers[current_msg_string] = ofGetElapsedTimef()+5.0f;
+        current_msg_string = (current_msg_string +1) % NUM_MSG_STRINGS;
+        //clear the next line
+        msg_strings[current_msg_string]="";
+        if(address.size()>2){  // address in the format of "/danceIsFlame/test" or longer
+            string control = address[2];
+            if(control=="CONNECT"){
+                sendSetting();
+            }
+            
+        }
+    }
+
+}
+
+void testApp::split(vector<string> &tokens, const string &text, char sep) {
+    int start = 0, end = 0;
+    while ((end = text.find(sep, start)) != string::npos) {
+        tokens.push_back(text.substr(start, end - start));
+        start = end + 1;
+    }
+    tokens.push_back(text.substr(start));
+}
+
 
 void testApp::draw(){
 	if(drawFluid) {
@@ -152,6 +260,16 @@ void testApp::draw(){
 	gui.draw();
 #endif
     myVideo->draw();
+    
+    if(DrawOSCMessage){
+        string buf;
+        buf = "Listening for osc messages on port: " + ofToString(PORT);
+        ofDrawBitmapString(buf, 450, 150);
+        for (int i=0; i< NUM_MSG_STRINGS; i++) {
+            ofDrawBitmapString(msg_strings[i],450, 150+15+15*i);
+        }
+    }
+    
 }
 
 
