@@ -53,8 +53,8 @@ void videoSource::setupVideo(int NX, int NY, msa::fluid::Solver  * fluidSolver0)
 //	videoColorMult = 0.1;
 //    hue = 0;
 //	velocityMult = 0.0001;
-	videoAlpha = 127;
-    doMirror = false;
+//	videoAlpha = 127;
+//    doMirror = false;
 	
 	
 	

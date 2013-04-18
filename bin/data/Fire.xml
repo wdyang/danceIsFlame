@@ -13,7 +13,7 @@
     </SliderFloat_colorMult>
     <SliderFloat_velocityMult>
         <name>velocityMult</name>
-        <value>94.000000000</value>
+        <value>73.000000000</value>
     </SliderFloat_velocityMult>
     <SliderFloat_fs.viscocity>
         <name>fs.viscocity</name>
@@ -73,7 +73,7 @@
     </SliderFloat_video.velocityMult>
     <Toggle_doMirror>
         <name>doMirror</name>
-        <value>1</value>
+        <value>0</value>
     </Toggle_doMirror>
     <Toggle_dynamicHue>
         <name>dynamicHue</name>

@@ -53,13 +53,14 @@ void testApp::setup() {
 	gui.addToggle("dynamicHue", myVideo->dynamicHue);
     gui.addSlider("video.hue", myVideo->hue, 0, 1);
     gui.addSlider("video.alpha", myVideo->videoAlpha, 0, 255);
-	gui.currentPage().setXMLName("ofxMSAFluidSettings.xml");
+	gui.currentPage().setXMLName(defaultPresetName);
     gui.loadFromXML();
 	gui.setDefaultKeys(true);
 	gui.setAutoSave(true);
     gui.show();
-
-    myVideo->doDraw=true;
+    
+    myVideo->doDraw=false;
+    gui.setDraw(false);
 
 #endif
 	
@@ -71,10 +72,15 @@ void testApp::setup() {
 	ofSetBackgroundAuto(false);
     
 //setup OSC receiver and sender
-    receiver.setup(PORT);
-    current_msg_string = 0;
-    DrawOSCMessage = true;
-    sender.setup(HOST, PORT_TO_GUI);
+//    receiver.setup(PORT);
+//    current_msg_string = 0;
+//    DrawOSCMessage = true;
+//    sender.setup(HOST, PORT_TO_GUI);
+    
+//    Setup TouchOSC
+    ipadReceiver.setup(PORT_FROM_IPAD);
+    ipadSender.setup(HOST_IPAD, PORT_TO_IPAD);
+    
 }
 
 
@@ -150,8 +156,12 @@ void testApp::update(){
         }
     }
     
-    while(receiver.hasWaitingMessages()){
-        parseOSCMessage();
+//    while(receiver.hasWaitingMessages()){
+//        parseOSCMessage();
+//    }
+    
+    while(ipadReceiver.hasWaitingMessages()){
+        parseIpadOSCMessage();
     }
     
 }
@@ -342,3 +352,6 @@ void testApp::mouseDragged(int x, int y, int button) {
 	pMouse = eventPos;
 }
 
+
+//==================================================================================================================================
+// TouchOSC

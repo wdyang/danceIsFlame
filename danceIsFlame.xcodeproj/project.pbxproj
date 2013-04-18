@@ -43,6 +43,7 @@
 		35AAE16116F64C5E0014C704 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35AAE15B16F64C5E0014C704 /* tinyxmlparser.cpp */; };
 		35AAE16216F64C5E0014C704 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35AAE15D16F64C5E0014C704 /* ofxXmlSettings.cpp */; };
 		35AAE16716F64EFC0014C704 /* VideoSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35AAE16516F64EFC0014C704 /* VideoSource.cpp */; };
+		35E2E683171FAB1F00BC869D /* touchOsc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35E2E681171FAB1F00BC869D /* touchOsc.cpp */; };
 		5eb9303fa9b240750638ae7c0ec6a2bb /* MSAFluidSolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5daa01df76ea921c7da7405d3734702f /* MSAFluidSolver.cpp */; };
 		825fa11382b216421ac896a64401b50d /* MSAFluidDrawerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = a0e48fd05bda9491dca86aaa03c55ab1 /* MSAFluidDrawerBase.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
@@ -190,6 +191,8 @@
 		35AAE15E16F64C5E0014C704 /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
 		35AAE16516F64EFC0014C704 /* VideoSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VideoSource.cpp; sourceTree = "<group>"; };
 		35AAE16616F64EFC0014C704 /* VideoSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoSource.h; sourceTree = "<group>"; };
+		35E2E681171FAB1F00BC869D /* touchOsc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = touchOsc.cpp; sourceTree = "<group>"; };
+		35E2E682171FAB1F00BC869D /* touchOsc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = touchOsc.h; sourceTree = "<group>"; };
 		58b94fff012004b3a4e58f3277ea9811 /* MSAFluid.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = MSAFluid.h; path = ../../../addons/ofxMSAFluid/src/MSAFluid.h; sourceTree = SOURCE_ROOT; };
 		5daa01df76ea921c7da7405d3734702f /* MSAFluidSolver.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = MSAFluidSolver.cpp; path = ../../../addons/ofxMSAFluid/src/MSAFluidSolver.cpp; sourceTree = SOURCE_ROOT; };
 		742419098e2a7cc7a7f877ba4f6d8058 /* MSACoreGL.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = MSACoreGL.h; path = ../../../addons/ofxMSACore/src/MSACoreGL.h; sourceTree = SOURCE_ROOT; };
@@ -614,6 +617,8 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
+				35E2E681171FAB1F00BC869D /* touchOsc.cpp */,
+				35E2E682171FAB1F00BC869D /* touchOsc.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -770,6 +775,7 @@
 				3553253A17140E8F00BBCEA2 /* ofxOscMessage.cpp in Sources */,
 				3553253B17140E8F00BBCEA2 /* ofxOscReceiver.cpp in Sources */,
 				3553253C17140E8F00BBCEA2 /* ofxOscSender.cpp in Sources */,
+				35E2E683171FAB1F00BC869D /* touchOsc.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

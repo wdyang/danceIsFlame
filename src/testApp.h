@@ -13,10 +13,19 @@
 #include "VideoSource.h"
 
 #include "ofxOsc.h"
+
+
+//for communicating with ofxUI
 #define HOST "localhost"
 #define PORT 12345
 #define PORT_TO_GUI 12346
 #define NUM_MSG_STRINGS 20
+
+//For comminicating with TouchOSC on ipad
+#define HOST_IPAD "192.168.2.2" //ipad ip
+//#define HOST_IPAD "10.0.1.5" //ipad ip
+#define PORT_FROM_IPAD 8000
+#define PORT_TO_IPAD 9000
 
 // comment this line out if you don't wanna use TUIO
 // you will need ofxTUIO & ofxOsc
@@ -25,7 +34,6 @@
 // comment this line out if you don't wanna use the GUI
 // you will need ofxSimpleGuiToo, ofxMSAInteractiveObject & ofxXmlSettings
 // if you don't use the GUI, you won't be able to see the fluid parameters
-#define USE_GUI		
 
 
 #ifdef USE_TUIO
@@ -35,7 +43,9 @@
 #endif
 
 
-#ifdef USE_GUI 
+#define USE_GUI
+
+#ifdef USE_GUI
 #include "ofxSimpleGuiToo.h"
 #endif
 
@@ -91,6 +101,7 @@ public:
 	ofxTuioClient tuioClient;
 #endif	
     
+//  For ofxUI
     bool DrawOSCMessage;
     ofxOscReceiver receiver;
     ofxOscSender sender;
@@ -104,6 +115,29 @@ public:
     void sendStringToGUI(const string &address, const string &msg);
     void sendFloatToGUI(const string &address, float msg);
     void sendIntToGUI(const string &address, int msg);
+    
+    
+//     OSC control for touchOSC
+    ofxOscReceiver ipadReceiver;
+    ofxOscSender    ipadSender;
+    void parseIpadOSCMessage();
+    void oscSendInitConfig();
+    void oscSendInt(const string &address, int msg);
+    void oscSendFloat(const string &address, float msg);
+    void oscSendFormatedFloat(const string &address, float msg, int precision); //precision is the number of decimal points
+    void oscSendString(const string &address, const string &msg);
+
+    
+    string defaultPresetName = "ofxMSAFluidSettings.xml";
+    string presetName[4]={ //when save and load, it will be translate into "File.xml"
+        "Fire",
+        "Particles",
+        "Vectors",
+        "Other"
+    };
+    bool bSavePresetVisible = false;
+    void saveToXml(int i);
+    void loadFromXml(int i);
 };
 
 
