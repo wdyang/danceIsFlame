@@ -129,7 +129,8 @@ public:
 
     
     string defaultPresetName = "ofxMSAFluidSettings.xml";
-    string presetName[4]={ //when save and load, it will be translate into "File.xml"
+    const static int NumPreset = 4;
+    string presetName[NumPreset]={ //when save and load, it will be translate into "File.xml"
         "Fire",
         "Particles",
         "Vectors",

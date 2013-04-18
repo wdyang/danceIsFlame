@@ -85,7 +85,7 @@ void testApp::parseIpadOSCMessage(){
         cout<<"Load from  present with id "<< id<<endl;
         loadFromXml(id);
         oscSendInitConfig();
-        for(int i=0; i<4; i++){
+        for(int i=0; i<NumPreset; i++){
             char address[24];
             sprintf(address, "/1/labelPreset%i/color", i+1);
             if(i==id){
@@ -116,7 +116,7 @@ void testApp::oscSendInitConfig(){
     oscSendFloat("/1/videoColorMult", myVideo->videoColorMult);
     oscSendFloat("/1/videoVelocityMult", myVideo->velocityMult);
     
-    for(int i=0; i<4; i++){
+    for(int i=0; i<NumPreset; i++){
         char address[24];
         sprintf(address, "/1/labelPreset%i", i+1);
         oscSendString(address, presetName[i]);
