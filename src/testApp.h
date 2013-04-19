@@ -22,7 +22,7 @@
 #define NUM_MSG_STRINGS 20
 
 //For comminicating with TouchOSC on ipad
-#define HOST_IPAD "192.168.2.2" //ipad ip
+//#define HOST_IPAD "192.168.2.2" //ipad ip
 //#define HOST_IPAD "10.0.1.5" //ipad ip
 #define PORT_FROM_IPAD 8000
 #define PORT_TO_IPAD 9000
@@ -120,6 +120,9 @@ public:
 //     OSC control for touchOSC
     ofxOscReceiver ipadReceiver;
     ofxOscSender    ipadSender;
+    string ipadIP;
+    bool    bSenderLive;
+
     void parseIpadOSCMessage();
     void oscSendInitConfig();
     void oscSendInt(const string &address, int msg);
