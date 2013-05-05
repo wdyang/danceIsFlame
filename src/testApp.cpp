@@ -131,7 +131,8 @@ void testApp::update(){
 	
 	// do finger stuff
 	list<ofxTuioCursor*>cursorList = tuioClient.getTuioCursors();
-    float MaxSpeed = 0.001;
+    float MaxSpeed = 0.01;
+    float MaxSpeed2 = MaxSpeed*MaxSpeed;
 	for(list<ofxTuioCursor*>::iterator it=cursorList.begin(); it != cursorList.end(); it++) {
 		ofxTuioCursor *tcur = (*it);
         float vx = tcur->getXSpeed() * tuioCursorSpeedMult;
@@ -143,7 +144,16 @@ void testApp::update(){
             vy = ofRandom(-tuioStationaryForce, tuioStationaryForce);
             vy = vy > MaxSpeed ? MaxSpeed : vy;
         }
-        addToFluid(ofVec2f(tcur->getX(), tcur->getY()), ofVec2f(vx, vy), true, true);
+        float v2 = vx*vx+vy*vy;
+        if(v2 > MaxSpeed2){
+            float ratio = sqrt(v2/MaxSpeed2);
+            vx/=ratio;
+            vy/=ratio;
+        };
+
+        float x =tcur->getX(), y=tcur->getY();
+        addToFluid(ofVec2f(x, y), ofVec2f(vx, vy), true, true);
+        cout<<"TUIO "<<x <<" "<<y<<endl; 
     }
 #endif
 	

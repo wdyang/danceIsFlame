@@ -18,6 +18,9 @@ public:
     float	radius;
     float	alpha;
     float	mass;
+    
+    static float vmax;
+    static bool bParticleInBW;
 	
     void init(float x, float y);
     void update( const msa::fluid::Solver &solver, const ofVec2f &windowSize, const ofVec2f &invWindowSize );

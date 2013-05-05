@@ -23,6 +23,9 @@ public:
 	
 	ParticleSystem();
 
+    float getVMax();
+    void setVMax(float val);
+    
     void updateAndDraw(const msa::fluid::Solver &aSolver, ofVec2f windowSize, bool drawingFluid);
 	void addParticles(const ofVec2f &pos, int count);
 	void addParticle(const ofVec2f &pos);

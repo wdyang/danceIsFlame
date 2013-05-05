@@ -11,6 +11,15 @@
 
 ParticleSystem::ParticleSystem() {
 	curIndex = 0;
+    Particle::vmax = 0.01f;
+}
+
+float ParticleSystem::getVMax(){
+    return Particle::vmax;
+}
+
+void ParticleSystem::setVMax(float val){
+    Particle::vmax = val;
 }
 
 void ParticleSystem::updateAndDraw(const msa::fluid::Solver &solver, ofVec2f windowSize, bool drawingFluid) {

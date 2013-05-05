@@ -65,7 +65,11 @@ void testApp::parseIpadOSCMessage(){
         myVideo->videoColorMult = m.getArgAsFloat(0);
     }else if(raw_address=="/1/videoVelocityMult"){
         myVideo->velocityMult = m.getArgAsFloat(0);
-    }else if(raw_address=="/1/saveState"){
+    }else if(raw_address=="/1/vMax"){
+        particleSystem.setVMax(m.getArgAsFloat(0));
+        oscSendFloat("/1/labelVMax", particleSystem.getVMax());
+    }
+    else if(raw_address=="/1/saveState"){
         int val = m.getArgAsInt32(0);
         if(val==0) {
             if(bSavePresetVisible){
@@ -120,6 +124,9 @@ void testApp::oscSendInitConfig(){
     
     oscSendFloat("/1/videoColorMult", myVideo->videoColorMult);
     oscSendFloat("/1/videoVelocityMult", myVideo->velocityMult);
+    
+    oscSendFloat("/1/vMax", particleSystem.getVMax());
+    oscSendFloat("/1/labelVMax", particleSystem.getVMax());
     
     for(int i=0; i<NumPreset; i++){
         char address[24];

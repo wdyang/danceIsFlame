@@ -12,6 +12,9 @@
 static const float MOMENTUM = 0.5f;
 static const float FLUID_FORCE = 0.6f;
 
+float Particle::vmax = 0.01f;
+bool Particle::bParticleInBW = false;
+
 void Particle::init(float x, float y) {
 	pos = ofVec2f( x, y );
 	vel = ofVec2f(0, 0);
@@ -82,12 +85,12 @@ void Particle::updateVertexArrays( bool drawingFluid, const ofVec2f &invWindowSi
 		float vyNorm = vel.y * invWindowSize.y;
 		float v2 = vxNorm * vxNorm + vyNorm * vyNorm;
 //#define VMAX 0.013f
-#define VMAX 0.01f     //reduce this number to get more red
-		if(v2>VMAX*VMAX) v2 = VMAX*VMAX;
+//#define VMAX 0.01f     //reduce this number to get more red
+		if(v2>vmax*vmax) v2 = vmax*vmax;
 		float satInc = mass > 0.5 ? mass * mass * mass : 0;
 		satInc *= satInc * satInc * satInc;
 		ofColor color;
-		color.setHsb(0, v2 * 255.0f / ( VMAX * VMAX ) + satInc, ofLerp(0.5, 1, mass) * alpha * 255.0f);
+		color.setHsb(0, v2 * 255.0f / ( vmax * vmax ) + satInc, ofLerp(0.5, 1, mass) * alpha * 255.0f);
 		
 		colBuffer[ci++] = color.r;
 		colBuffer[ci++] = color.g;
