@@ -68,8 +68,13 @@ void testApp::parseIpadOSCMessage(){
     }else if(raw_address=="/1/vMax"){
         particleSystem.setVMax(m.getArgAsFloat(0));
         oscSendFloat("/1/labelVMax", particleSystem.getVMax());
-    }
-    else if(raw_address=="/1/saveState"){
+    }else if(raw_address=="/1/bTuioOn"){
+        bTuioOn = m.getArgAsInt32(0);
+        oscSendInt("/1/bTuioOn", bTuioOn);
+    }else if(raw_address=="/1/viscocity"){
+        fluidSolver.viscocity = m.getArgAsFloat(0);
+        oscSendFormatedFloat("/1/labelViscocity", fluidSolver.viscocity, 5);
+    }else if(raw_address=="/1/saveState"){
         int val = m.getArgAsInt32(0);
         if(val==0) {
             if(bSavePresetVisible){
@@ -127,6 +132,10 @@ void testApp::oscSendInitConfig(){
     
     oscSendFloat("/1/vMax", particleSystem.getVMax());
     oscSendFloat("/1/labelVMax", particleSystem.getVMax());
+    oscSendFloat("/1/viscocity", fluidSolver.viscocity);
+    oscSendFormatedFloat("/1/labelViscocity", fluidSolver.viscocity, 5);
+    
+    oscSendInt("/1/bTuioOn", bTuioOn);
     
     for(int i=0; i<NumPreset; i++){
         char address[24];

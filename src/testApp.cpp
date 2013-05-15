@@ -127,33 +127,35 @@ void testApp::update(){
     myVideo->update();
 	
 #ifdef USE_TUIO
-	tuioClient.getMessage();
-	
-	// do finger stuff
-	list<ofxTuioCursor*>cursorList = tuioClient.getTuioCursors();
-    float MaxSpeed = 0.01;
-    float MaxSpeed2 = MaxSpeed*MaxSpeed;
-	for(list<ofxTuioCursor*>::iterator it=cursorList.begin(); it != cursorList.end(); it++) {
-		ofxTuioCursor *tcur = (*it);
-        float vx = tcur->getXSpeed() * tuioCursorSpeedMult;
-        float vy = tcur->getYSpeed() * tuioCursorSpeedMult;
+    if(bTuioOn){
+        tuioClient.getMessage();
         
-        if(vx == 0 && vy == 0) {
-            vx = ofRandom(-tuioStationaryForce, tuioStationaryForce);
-            vx = vx > MaxSpeed ? MaxSpeed : vx;
-            vy = ofRandom(-tuioStationaryForce, tuioStationaryForce);
-            vy = vy > MaxSpeed ? MaxSpeed : vy;
-        }
-        float v2 = vx*vx+vy*vy;
-        if(v2 > MaxSpeed2){
-            float ratio = sqrt(v2/MaxSpeed2);
-            vx/=ratio;
-            vy/=ratio;
-        };
+        // do finger stuff
+        list<ofxTuioCursor*>cursorList = tuioClient.getTuioCursors();
+        float MaxSpeed = 0.01;
+        float MaxSpeed2 = MaxSpeed*MaxSpeed;
+        for(list<ofxTuioCursor*>::iterator it=cursorList.begin(); it != cursorList.end(); it++) {
+            ofxTuioCursor *tcur = (*it);
+            float vx = tcur->getXSpeed() * tuioCursorSpeedMult;
+            float vy = tcur->getYSpeed() * tuioCursorSpeedMult;
+            
+            if(vx == 0 && vy == 0) {
+                vx = ofRandom(-tuioStationaryForce, tuioStationaryForce);
+                vx = vx > MaxSpeed ? MaxSpeed : vx;
+                vy = ofRandom(-tuioStationaryForce, tuioStationaryForce);
+                vy = vy > MaxSpeed ? MaxSpeed : vy;
+            }
+            float v2 = vx*vx+vy*vy;
+            if(v2 > MaxSpeed2){
+                float ratio = sqrt(v2/MaxSpeed2);
+                vx/=ratio;
+                vy/=ratio;
+            };
 
-        float x =tcur->getX(), y=tcur->getY();
-        addToFluid(ofVec2f(x, y), ofVec2f(vx, vy), true, true);
-        cout<<"TUIO "<<x <<" "<<y<<endl; 
+            float x =tcur->getX(), y=tcur->getY();
+            addToFluid(ofVec2f(x, y), ofVec2f(vx, vy), true, true);
+            cout<<"TUIO "<<x <<" "<<y<<endl; 
+        }
     }
 #endif
 	

@@ -70,6 +70,7 @@ public:
 	bool                    resizeFluid;
 	bool                    drawFluid;
 	bool                    drawParticles;
+    bool            bTuioOn = true;
 	
 	msa::fluid::Solver      fluidSolver;
 	msa::fluid::DrawerGl	fluidDrawer;
