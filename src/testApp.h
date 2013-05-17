@@ -143,6 +143,10 @@ public:
     bool bSavePresetVisible = false;
     void saveToXml(int i);
     void loadFromXml(int i);
+    
+    ofSoundPlayer music;
+    float musicPosition = 0.f;
+    string msToTime(int ms);
 };
 
 

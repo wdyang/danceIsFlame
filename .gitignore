@@ -22,7 +22,7 @@
 *.lock
 profile
 bin/dance*
-
+bin/data
 
 ####
 # Xcode temporary files that should never be committed

@@ -74,6 +74,33 @@ void testApp::parseIpadOSCMessage(){
     }else if(raw_address=="/1/viscocity"){
         fluidSolver.viscocity = m.getArgAsFloat(0);
         oscSendFormatedFloat("/1/labelViscocity", fluidSolver.viscocity, 5);
+// Music player
+// Add musicPosition, music msToTime() in testApp.h
+    }else if(raw_address=="/1/musicVolume"){
+        music.setVolume(m.getArgAsFloat(0));
+        oscSendFloat("/1/labelVolume", music.getVolume());
+    }else if(raw_address=="/1/musicPlaying"){
+        bool playing = m.getArgAsInt32(0);
+        if(playing){
+            music.play();
+            music.setPosition(musicPosition);
+        }else{
+            musicPosition = music.getPosition();
+            music.stop();
+        }
+    }else if(raw_address=="/1/musicReset"){
+        if(m.getArgAsInt32(0)==0){
+            musicPosition = 0.f;
+            music.setPosition(musicPosition);
+            oscSendFloat("/1/musicPosition", 0.f);
+            oscSendFloat("/1/labelMusicPositionMs", 0.f);
+        }
+    }else if(raw_address=="/1/musicPosition"){
+        musicPosition = m.getArgAsFloat(0);
+        music.setPosition(musicPosition);
+        oscSendFloat("/1/MusicPosition", musicPosition);
+        oscSendString("/1/labelMusicPositionMs", msToTime(music.getPositionMS()));
+// End Music Player
     }else if(raw_address=="/1/saveState"){
         int val = m.getArgAsInt32(0);
         if(val==0) {
@@ -134,6 +161,9 @@ void testApp::oscSendInitConfig(){
     oscSendFloat("/1/labelVMax", particleSystem.getVMax());
     oscSendFloat("/1/viscocity", fluidSolver.viscocity);
     oscSendFormatedFloat("/1/labelViscocity", fluidSolver.viscocity, 5);
+    
+    oscSendFloat("/1/musicVolume", music.getVolume());
+    oscSendFloat("/1/labelVolume", music.getVolume());
     
     oscSendInt("/1/bTuioOn", bTuioOn);
     
@@ -198,3 +228,12 @@ void testApp::loadFromXml(int i){
     gui.setAutoSave(true);
 }
 
+
+string testApp::msToTime(int ms){
+    
+    int sec = ms/1000;
+    std::ostringstream s;
+    s<<sec/60<<":"<<sec%60;
+    
+    return s.str();
+}

@@ -81,6 +81,8 @@ void testApp::setup() {
     ipadReceiver.setup(PORT_FROM_IPAD);
 //    ipadSender.setup(HOST_IPAD, PORT_TO_IPAD);
     
+    music.loadSound("Flo.mp3");
+    
 }
 
 
@@ -176,6 +178,10 @@ void testApp::update(){
         parseIpadOSCMessage();
     }
     
+    if(music.getIsPlaying()){
+        oscSendString("/1/labelMusicPositionMs", msToTime(music.getPositionMS()));
+        oscSendFloat("/1/musicPosition", music.getPosition());
+    }
 }
 void testApp::sendSetting(){
 
