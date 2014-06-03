@@ -13,6 +13,7 @@
 #include "VideoSource.h"
 
 #include "ofxOsc.h"
+#include "ofxSyphon.h"
 
 
 //for communicating with ofxUI
@@ -149,6 +150,8 @@ public:
     ofSoundPlayer music;
     float musicPosition = 0.f;
     string msToTime(int ms);
+    
+    ofxSyphonServer outputSyphonServer;
 };
 
 

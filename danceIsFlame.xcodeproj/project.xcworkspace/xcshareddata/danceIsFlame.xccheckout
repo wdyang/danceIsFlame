@@ -16,6 +16,8 @@
 		<string>https://github.com/wdyang/danceIsFlame</string>
 		<key>21992006-4C21-4205-BD8E-BD7D7244F6FA</key>
 		<string>https://github.com/memo/ofxSimpleGuiToo.git</string>
+		<key>23F16C2E-1714-47AE-BB93-FAEAB17C391C</key>
+		<string>https://github.com/astellato/ofxSyphon.git</string>
 		<key>753EF502-0BA2-4C3F-84F1-7A7C14AAD61C</key>
 		<string>https://github.com/patriciogonzalezvivo/ofxTuio.git</string>
 	</dict>
@@ -29,6 +31,8 @@
 		<string>../..</string>
 		<key>21992006-4C21-4205-BD8E-BD7D7244F6FA</key>
 		<string>../../../../../addons/ofxSimpleGuiToo</string>
+		<key>23F16C2E-1714-47AE-BB93-FAEAB17C391C</key>
+		<string>../../../../../addons/ofxSyphon</string>
 		<key>753EF502-0BA2-4C3F-84F1-7A7C14AAD61C</key>
 		<string>../../../../../addons/ofxTuio</string>
 		<key>8AFB1F71-968C-4C28-8549-FCBF13E72110</key>
@@ -70,17 +74,17 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>753EF502-0BA2-4C3F-84F1-7A7C14AAD61C</string>
+			<string>23F16C2E-1714-47AE-BB93-FAEAB17C391C</string>
 			<key>IDESourceControlWCCName</key>
-			<string>ofxTuio</string>
+			<string>ofxSyphon</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>8AFB1F71-968C-4C28-8549-FCBF13E72110</string>
+			<string>753EF502-0BA2-4C3F-84F1-7A7C14AAD61C</string>
 			<key>IDESourceControlWCCName</key>
-			<string>Project</string>
+			<string>ofxTuio</string>
 		</dict>
 	</array>
 </dict>

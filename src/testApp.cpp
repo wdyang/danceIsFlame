@@ -82,7 +82,7 @@ void testApp::setup() {
 //    ipadSender.setup(HOST_IPAD, PORT_TO_IPAD);
     
     music.loadSound("Flo.mp3");
-    
+    outputSyphonServer.setName("DanceIsFlame");
 }
 
 
@@ -284,7 +284,7 @@ void testApp::draw(){
 	}
 	if(drawParticles)
 		particleSystem.updateAndDraw(fluidSolver, ofGetWindowSize(), drawFluid);
-	
+	outputSyphonServer.publishScreen();
 //	ofDrawBitmapString(sz, 50, 50);
 
 #ifdef USE_GUI 
