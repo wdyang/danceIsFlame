@@ -102,6 +102,8 @@ public:
 	ofxTuioClient tuioClient;
 #endif	
     
+    float xFactor = 1.4;
+    float yFactor = 1.2;
 //  For ofxUI
     bool DrawOSCMessage;
     ofxOscReceiver receiver;

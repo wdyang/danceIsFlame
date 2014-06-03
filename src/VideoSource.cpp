@@ -39,7 +39,7 @@ void videoSource::setupVideo(int NX, int NY, msa::fluid::Solver  * fluidSolver0)
 //	destroy();
 	videoFrameCnt=1; videoCaptured=1;
 	vidGrabber.setVerbose(true);
-    vidGrabber.setDeviceID(0);
+    vidGrabber.setDeviceID(1);
 	vidGrabber.initGrabber(camWidth,camHeight);
 
 	videoTexture.allocate(fluidWidth, fluidHeight, GL_RGB);

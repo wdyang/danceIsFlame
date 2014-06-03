@@ -154,7 +154,10 @@ void testApp::update(){
                 vy/=ratio;
             };
 
-            float x =tcur->getX(), y=tcur->getY();
+//            float x =tcur->getX(), y=tcur->getY();
+//            add a factor to correct LKB output range error
+            float x =tcur->getX()*xFactor, y=tcur->getY()*yFactor;
+//            float x =tcur->getX()*1.0, y=tcur->getY()*1.0;
             addToFluid(ofVec2f(x, y), ofVec2f(vx, vy), true, true);
             cout<<"TUIO "<<x <<" "<<y<<endl; 
         }
@@ -334,7 +337,22 @@ void testApp::keyPressed  (int key){
 		case 'r':
 			fluidSolver.reset();
 			break;
-			
+		case 'x':
+            xFactor /=1.01;
+            cout<<"X : Y Factor: "<<xFactor<<" : "<<yFactor<<endl;
+            break;
+        case 'X':
+            xFactor *= 1.01;
+            cout<<"X : Y Factor: "<<xFactor<<" : "<<yFactor<<endl;
+            break;
+        case 'y':
+            yFactor /=1.01;
+            cout<<"X : Y Factor: "<<xFactor<<" : "<<yFactor<<endl;
+            break;
+        case 'Y':
+            yFactor *=1.01;
+            cout<<"X : Y Factor: "<<xFactor<<" : "<<yFactor<<endl;
+            break;
 		case 'i':
 			myVideo->doDraw = !myVideo->doDraw;
 			break;
