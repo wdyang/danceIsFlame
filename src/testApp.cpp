@@ -300,7 +300,9 @@ void testApp::draw(){
             ofDrawBitmapString(msg_strings[i],450, 150+15+15*i);
         }
     }
-    
+    stringstream titleStream;
+    titleStream<<"x, y factors: "<<xFactor<<" : "<<yFactor;
+    ofSetWindowTitle(titleStream.str());
 }
 
 
